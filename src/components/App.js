@@ -3,7 +3,7 @@ import React, { useReducer } from 'react';
 import './App.css';
 
 import reducer, { initialState } from '../reducers'
-import {addOne, applyMemory, applyNumber, changeOperation, clearMemory, clearTotal, setMemory } from '../actions';
+import {addOne, applyMemory, applyNumber, changeOperation, clearDisplay, clearMemory, setMemory } from '../actions';
 import TotalDisplay from './TotalDisplay';
 import CalcButton from './CalcButton';
 
@@ -32,7 +32,7 @@ function App() {
   }
   
   const clearTotalClickHandler = () => { 
-    dispatch(clearTotal())
+    dispatch(clearDisplay())
   }
 
   return (
