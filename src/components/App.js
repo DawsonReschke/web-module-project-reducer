@@ -1,11 +1,40 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 
 import './App.css';
 
+import reducer, { initialState } from '../reducers'
+import {addOne, applyMemory, applyNumber, changeOperation, clearMemory, clearTotal, setMemory } from '../actions';
 import TotalDisplay from './TotalDisplay';
 import CalcButton from './CalcButton';
 
+
 function App() {
+  const [state,dispatch] = useReducer(reducer,initialState)
+  
+  const operationClickHandler = (evt) =>{
+    dispatch(changeOperation(evt.target.value))
+  }
+
+  const numberClickHandler = (evt) =>{
+    dispatch(applyNumber(evt.target.value))
+  }
+
+  const useMemoryClickHandler = () => { 
+    dispatch(applyMemory())
+  }
+
+  const setMemoryClickHandler = ()=>{
+    dispatch(setMemory())
+  }
+  
+  const clearMemoryClickHandler = () => {
+    dispatch(clearMemory())
+  }
+  
+  const clearTotalClickHandler = () => { 
+    dispatch(clearTotal())
+  }
+
   return (
     <div className="App">
       <nav className="navbar navbar-dark bg-dark">
@@ -16,44 +45,44 @@ function App() {
         <div className="col-md-12 d-flex justify-content-center">
           <form name="Cal">
             
-            <TotalDisplay value={0}/>
+            <TotalDisplay value={state.total}/>
             <div className="row details">
-              <span id="operation"><b>Operation:</b> X</span>
-              <span id="memory"><b>Memory:</b> 0</span>
+              <span id="operation"><b>Operation:</b> {state.operation}</span>
+              <span id="memory"><b>Memory:</b> {state.memory}</span>
             </div>
             
             <div className="row">
-              <CalcButton value={"M+"}/>
-              <CalcButton value={"MR"}/>
-              <CalcButton value={"MC"}/>
+              <CalcButton onClick={setMemoryClickHandler} value={"M+"}/>
+              <CalcButton onClick={useMemoryClickHandler} value={"MR"}/>
+              <CalcButton onClick={clearMemoryClickHandler} value={"MC"}/>
             </div>
 
             <div className="row">
-              <CalcButton value={1}/>
-              <CalcButton value={2}/>
-              <CalcButton value={3}/>
+              <CalcButton onClick={numberClickHandler} value={1}/>
+              <CalcButton onClick={numberClickHandler} value={2}/>
+              <CalcButton onClick={numberClickHandler} value={3}/>
             </div>
 
             <div className="row">
-              <CalcButton value={4}/>
-              <CalcButton value={5}/>
-              <CalcButton value={6}/>
+              <CalcButton onClick={numberClickHandler} value={4}/>
+              <CalcButton onClick={numberClickHandler} value={5}/>
+              <CalcButton onClick={numberClickHandler} value={6}/>
             </div>
 
             <div className="row">
-              <CalcButton value={7}/>
-              <CalcButton value={8}/>
-              <CalcButton value={9}/>
+              <CalcButton onClick={numberClickHandler} value={7}/>
+              <CalcButton onClick={numberClickHandler} value={8}/>
+              <CalcButton onClick={numberClickHandler} value={9}/>
             </div>
 
             <div className="row">
-              <CalcButton value={"+"}/>
-              <CalcButton value={"*"}/>
-              <CalcButton value={"-"}/>
+              <CalcButton onClick={operationClickHandler} value={"+"}/>
+              <CalcButton onClick={operationClickHandler} value={"*"}/>
+              <CalcButton onClick={operationClickHandler} value={"-"}/>
             </div>
 
             <div className="row ce_button">
-              <CalcButton value={"CE"}/>
+              <CalcButton onClick={clearTotalClickHandler} value={"CE"}/>
             </div>
 
           </form>
